@@ -382,46 +382,124 @@ function saveLocalBoxProof(diffId, proofData) {
   } catch (e) {}
 }
 
-/**
- * Fetches contribution proof from Algorand Box Storage or Local Registry
- * @param {string} diffId 
- * @returns {Promise<{ diffId: string, repoId: string, fromCommit: string, toCommit: string, diffHash: string, submitter: string, timestamp: number, onChain: boolean } | null>}
- */
-export async function getDiffFromChain(diffId) {
-  const normalizedId = diffId.toLowerCase();
-  
-  // Query box directly from live Algorand TestNet Node
-  try {
-    const boxKeyBytes = hexToUint8Array(normalizedId);
-    const boxResponse = await algodClient.getApplicationBoxByName(DIFF_REGISTRY_APP_ID, boxKeyBytes).do();
-    const boxValueStr = new TextDecoder().decode(boxResponse.value);
-    
-    // Parse record format: repo_id|from_commit|to_commit|diff_hash|submitter|timestamp
-    const parts = boxValueStr.split('|');
-    if (parts.length >= 4) {
-      return {
-        diffId: normalizedId,
-        repoId: parts[0],
-        fromCommit: parts[1],
-        toCommit: parts[2],
-        diffHash: parts[3],
-        submitter: parts[4] || 'ALGORAND_TESTNET_ACCOUNT',
-        timestamp: parseInt(parts[5] || '0', 10),
-        onChain: true
-      };
-    }
-  } catch (e) {}
-
+export function getLocalBoxProof(diffId) {
+  const normalizedId = (diffId || '').trim().toLowerCase();
   try {
     const localData = JSON.parse(localStorage.getItem('algodiff_proofs') || '{}');
-    if (localData[normalizedId]) {
-      return localData[normalizedId];
-    }
+    if (localData[normalizedId]) return localData[normalizedId];
   } catch (e) {}
 
   if (localBoxStore.has(normalizedId)) {
     return localBoxStore.get(normalizedId);
   }
-
   return null;
+}
+
+/**
+ * Fetches contribution proof from Algorand Box Storage on App ID 769036041
+ * Returns structured classification: { status: 'FOUND'|'BOX_NOT_FOUND'|'BOX_DECODE_ERROR'|'NETWORK_ERROR', record: Object|null }
+ * @param {string} diffId 
+ */
+export async function getDiffFromChain(diffId) {
+  const normalizedId = (diffId || '').trim().toLowerCase();
+  
+  if (!/^[0-9a-fA-F]{64}$/.test(normalizedId)) {
+    const localFallback = getLocalBoxProof(normalizedId);
+    if (localFallback) return { status: 'FOUND', record: localFallback };
+    return { status: 'INVALID_KEY', message: 'Diff ID must be a valid 64-character hex string.', record: null };
+  }
+
+  try {
+    const boxKeyBytes = hexToUint8Array(normalizedId);
+    let boxResponse = null;
+
+    try {
+      boxResponse = await algodClient.getApplicationBoxByName(DIFF_REGISTRY_APP_ID, boxKeyBytes).do();
+    } catch (nodeErr) {
+      // If 404 or box not found, check local session fallback
+      if (nodeErr?.status === 404 || nodeErr?.message?.includes('box not found') || String(nodeErr).includes('404')) {
+        const localFallback = getLocalBoxProof(normalizedId);
+        if (localFallback) {
+          return { status: 'FOUND', record: localFallback };
+        }
+        return { status: 'BOX_NOT_FOUND', message: 'No Box Storage record exists on Algorand TestNet App ID 769036041 for this diffId key.', record: null };
+      }
+      return { status: 'NETWORK_ERROR', message: `Algorand TestNet node error: ${nodeErr.message || 'Unable to reach node'}`, record: null };
+    }
+
+    if (!boxResponse || !boxResponse.value) {
+      const localFallback = getLocalBoxProof(normalizedId);
+      if (localFallback) return { status: 'FOUND', record: localFallback };
+      return { status: 'BOX_NOT_FOUND', message: 'Box record exists but contains empty value.', record: null };
+    }
+
+    // Binary Parsing according to smart contract encoding:
+    // repo_id.bytes | from_commit.bytes | to_commit.bytes | diff_hash.bytes | sender_str (32 raw bytes) | timestamp (8 raw bytes BE uint64)
+    const valBuf = boxResponse.value;
+    const PIPE = 0x7C;
+    const pipePositions = [];
+    for (let i = 0; i < valBuf.length; i++) {
+      if (valBuf[i] === PIPE) pipePositions.push(i);
+    }
+
+    if (pipePositions.length < 3) {
+      const localFallback = getLocalBoxProof(normalizedId);
+      if (localFallback) return { status: 'FOUND', record: localFallback };
+      return { status: 'BOX_DECODE_ERROR', message: 'Box Storage value format does not match smart contract schema.', record: null };
+    }
+
+    const decoder = new TextDecoder('utf-8', { fatal: false });
+    const repoId = decoder.decode(valBuf.subarray(0, pipePositions[0]));
+    const fromCommit = decoder.decode(valBuf.subarray(pipePositions[0] + 1, pipePositions[1]));
+    const toCommit = decoder.decode(valBuf.subarray(pipePositions[1] + 1, pipePositions[2]));
+    
+    // Determine diffHash boundary
+    const endHashIndex = pipePositions.length >= 4 ? pipePositions[3] : valBuf.length;
+    const diffHash = decoder.decode(valBuf.subarray(pipePositions[2] + 1, endHashIndex));
+
+    let submitter = 'ALGORAND_TESTNET_ACCOUNT';
+    let timestamp = Math.floor(Date.now() / 1000);
+
+    if (pipePositions.length >= 5) {
+      const senderBytes = valBuf.subarray(pipePositions[3] + 1, pipePositions[4]);
+      if (senderBytes.length === 32) {
+        try {
+          submitter = algosdk.encodeAddress(new Uint8Array(senderBytes));
+        } catch (e) {}
+      }
+
+      const timestampBytes = valBuf.subarray(pipePositions[4] + 1);
+      if (timestampBytes.length === 8) {
+        let tsBig = 0n;
+        for (let i = 0; i < 8; i++) {
+          tsBig = (tsBig << 8n) + BigInt(timestampBytes[i]);
+        }
+        timestamp = Number(tsBig);
+      }
+    }
+
+    const record = {
+      diffId: normalizedId,
+      repoId,
+      fromCommit,
+      toCommit,
+      diffHash,
+      submitter,
+      timestamp,
+      onChain: true,
+    };
+
+    // Save to local cache for instant UI availability
+    saveLocalBoxProof(normalizedId, record);
+
+    return {
+      status: 'FOUND',
+      record,
+    };
+  } catch (e) {
+    console.error("[AlgoDiff] getDiffFromChain exception:", e);
+    const localFallback = getLocalBoxProof(normalizedId);
+    if (localFallback) return { status: 'FOUND', record: localFallback };
+    return { status: 'BOX_READ_ERROR', message: e.message || 'Failed to query Box Storage from Algorand node.', record: null };
+  }
 }

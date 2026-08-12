@@ -123,18 +123,41 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
       }
 
       // Query live Algorand TestNet Box Storage
-      const onChainRecord = await getDiffFromChain(targetDiffId);
+      const queryResult = await getDiffFromChain(targetDiffId);
+      const onChainRecord = queryResult?.record || null;
 
       if (!onChainRecord) {
-        setVerificationResult({
-          status: 'NOT_REGISTERED',
-          computedDiffId: targetDiffId,
-          computedDiffHash: targetDiffHash,
-          updateContext: targetUpdateContext,
-          onChainRecord: null,
-          title: 'NO ON-CHAIN PROOF FOUND',
-          message: 'This repository change has not been registered on Algorand yet.',
-        });
+        if (queryResult.status === 'BOX_DECODE_ERROR') {
+          setVerificationResult({
+            status: 'DECODE_ERROR',
+            computedDiffId: targetDiffId,
+            computedDiffHash: targetDiffHash,
+            updateContext: targetUpdateContext,
+            onChainRecord: null,
+            title: 'BOX DECODE ERROR',
+            message: queryResult.message || 'On-chain box exists but payload structure could not be parsed.',
+          });
+        } else if (queryResult.status === 'NETWORK_ERROR') {
+          setVerificationResult({
+            status: 'NETWORK_ERROR',
+            computedDiffId: targetDiffId,
+            computedDiffHash: targetDiffHash,
+            updateContext: targetUpdateContext,
+            onChainRecord: null,
+            title: 'ALGORAND NETWORK ERROR',
+            message: queryResult.message || 'Unable to reach Algorand TestNet node.',
+          });
+        } else {
+          setVerificationResult({
+            status: 'NOT_REGISTERED',
+            computedDiffId: targetDiffId,
+            computedDiffHash: targetDiffHash,
+            updateContext: targetUpdateContext,
+            onChainRecord: null,
+            title: 'NO ON-CHAIN PROOF FOUND',
+            message: queryResult.message || 'This repository change has not been registered on Algorand yet.',
+          });
+        }
       } else {
         const isMatch = onChainRecord.diffHash.toLowerCase() === targetDiffHash.toLowerCase();
         if (isMatch) {
@@ -440,6 +463,34 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* STATE 4: DECODE_ERROR */}
+          {verificationResult.status === 'DECODE_ERROR' && (
+            <div className="saas-card p-6 border-2 border-orange-500 bg-orange-50 text-orange-950 rounded-xl space-y-3">
+              <div className="flex items-center gap-3 text-orange-800 font-mono font-bold text-lg">
+                <AlertTriangle className="w-7 h-7 text-orange-600 shrink-0" />
+                <span>{verificationResult.title}</span>
+              </div>
+
+              <p className="text-xs font-mono text-orange-900 pl-10 font-semibold">
+                {verificationResult.message}
+              </p>
+            </div>
+          )}
+
+          {/* STATE 5: NETWORK_ERROR & ERROR */}
+          {(verificationResult.status === 'NETWORK_ERROR' || verificationResult.status === 'ERROR') && (
+            <div className="saas-card p-6 border-2 border-rose-400 bg-rose-50 text-rose-900 rounded-xl space-y-3">
+              <div className="flex items-center gap-3 text-rose-800 font-mono font-bold text-lg">
+                <AlertCircle className="w-7 h-7 text-rose-600 shrink-0" />
+                <span>{verificationResult.title}</span>
+              </div>
+
+              <p className="text-xs font-mono text-rose-900 pl-10 font-semibold">
+                {verificationResult.message}
+              </p>
             </div>
           )}
 

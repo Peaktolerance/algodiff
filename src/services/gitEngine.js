@@ -97,14 +97,15 @@ export function parseGitHubUrl(input) {
  */
 export async function loadPublicGitHubRepo(owner, repo) {
   const repoSlug = `${owner}/${repo}`;
-  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=25`;
+  const apiUrl = `/api/github/repos/${owner}/${repo}/commits?per_page=25`;
 
   const response = await fetch(apiUrl);
   if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
     if (response.status === 404) {
       throw new Error(`GitHub repository '${repoSlug}' not found or is private.`);
     }
-    throw new Error(`Failed to load GitHub repository (${response.status} ${response.statusText})`);
+    throw new Error(errData.error || `Failed to load GitHub repository (${response.status} ${response.statusText})`);
   }
 
   const commitsData = await response.json();
@@ -114,10 +115,10 @@ export async function loadPublicGitHubRepo(owner, repo) {
 
   const mappedCommits = commitsData.map(c => ({
     id: c.sha,
-    shortId: c.sha.substring(0, 7),
-    message: (c.commit?.message || 'No commit message').split('\n')[0],
-    author: `${c.commit?.author?.name || 'Developer'} <${c.commit?.author?.email || 'dev@github.com'}>`,
-    date: c.commit?.author?.date || new Date().toISOString(),
+    shortId: c.shortSha || c.sha.substring(0, 7),
+    message: c.message || 'No commit message',
+    author: c.author || 'Developer',
+    date: c.date || new Date().toISOString(),
   }));
 
   return {
@@ -140,37 +141,18 @@ export async function loadPublicGitHubRepo(owner, repo) {
  * @returns {Promise<{ unifiedDiff: string, stats: { filesChanged: number, additions: number, deletions: number } }>}
  */
 export async function fetchGitHubCompareDiff(owner, repo, fromSha, toSha) {
-  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/compare/${fromSha}...${toSha}`;
+  const apiUrl = `/api/github/repos/${owner}/${repo}/compare/${fromSha}...${toSha}`;
   const response = await fetch(apiUrl);
   
   if (!response.ok) {
-    throw new Error(`Failed to compare commits on GitHub (${response.status})`);
+    const errData = await response.json().catch(() => ({}));
+    throw new Error(errData.error || `Failed to compare commits on GitHub (${response.status})`);
   }
 
   const compareData = await response.json();
-  const files = compareData.files || [];
-
-  let fullDiffText = '';
-  let totalAdditions = 0;
-  let totalDeletions = 0;
-
-  for (const file of files) {
-    fullDiffText += `diff --git a/${file.filename} b/${file.filename}\n`;
-    fullDiffText += `--- a/${file.filename}\n`;
-    fullDiffText += `+++ b/${file.filename}\n`;
-    fullDiffText += (file.patch || '@@ -0,0 +1 @@\n+ [Binary or large file changed]') + '\n\n';
-
-    totalAdditions += file.additions || 0;
-    totalDeletions += file.deletions || 0;
-  }
-
   return {
-    unifiedDiff: fullDiffText.trim(),
-    stats: {
-      filesChanged: files.length,
-      additions: totalAdditions,
-      deletions: totalDeletions,
-    }
+    unifiedDiff: compareData.unifiedDiff || '',
+    stats: compareData.stats || { filesChanged: 0, additions: 0, deletions: 0 },
   };
 }
 

@@ -1,4 +1,4 @@
-# AlgoDiff Repository Walkthrough & Setup Guide
+# AlgoDiff Repository Walkthrough & Fix Report
 
 AlgoDiff is a developer security and repository intelligence SaaS platform built on Algorand TestNet, providing verifiable change monitoring, SHA-256 canonical diff fingerprinting, and x402 HTTP pay-per-use proof registration.
 
@@ -12,7 +12,7 @@ Hack/
 │   └── diff_registry/         # AlgoPy AVM Smart Contract source & TEAL artifacts
 ├── docs/                      # Technical documentation (Architecture, Demo, Verification)
 ├── server/                    # Express 5 REST API & Repo Watch polling engine
-│   ├── clients/               # GitHub REST API client
+│   ├── clients/               # GitHub REST API client (User-Agent header enforcement)
 │   ├── services/              # Change Intelligence summarizer
 │   ├── storage/               # JSON data store & Docker persistence
 │   └── watcher/               # Background polling service
@@ -28,21 +28,16 @@ Hack/
 
 ---
 
-## Quick Start (Local Development)
+## GitHub API 403 Production Fix Summary
 
-### 1. Install Dependencies
-```bash
-npm install
-```
+### Root Cause
+- **Direct Browser `fetch()` Calls**: Client-side browser code (`src/services/gitEngine.js`) called `https://api.github.com/...` directly. Modern browsers strip/prohibit custom `User-Agent` headers in `fetch()`. GitHub REST API strictly requires a `User-Agent` header for all requests, returning `HTTP 403 Forbidden` (`"Request forbidden by administrative rules"`).
 
-### 2. Start Local Development Server
-```bash
-# Start frontend dev server
-npm run dev
-
-# Start x402 backend server
-npm run x402-server
-```
+### Production Solution
+1. **Backend REST Proxy**: Created `/api/github/repos/:owner/:repo/*` endpoints in `server/x402Server.js` powered by `server/clients/githubClient.js`.
+2. **Server-Side User-Agent**: Node backend executes requests with `'User-Agent': 'AlgoDiff-RepoWatcher/1.0'`.
+3. **Frontend Routing**: Updated `src/services/gitEngine.js` to proxy all Manual Diff requests through `/api/github/repos/...`.
+4. **Header & Status Inspection**: Updated `server/clients/githubClient.js` to inspect `x-ratelimit-remaining` response headers before classifying 403 errors, ensuring rate-limiting is only reported when remaining counter is 0.
 
 ---
 

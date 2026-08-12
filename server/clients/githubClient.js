@@ -38,6 +38,26 @@ const GITHUB_HEADERS = {
 };
 
 /**
+ * Helper to handle GitHub response errors with accurate header/status inspection
+ */
+function handleGitHubResponseError(response, repoSlug) {
+  if (response.status === 404) {
+    throw new Error(`Repository '${repoSlug}' could not be found.`);
+  }
+
+  const remaining = response.headers?.get ? response.headers.get('x-ratelimit-remaining') : null;
+  if (response.status === 403 && remaining === '0') {
+    throw new Error(`GitHub API rate limit reached. Please try again later.`);
+  }
+
+  if (response.status === 403) {
+    throw new Error(`GitHub API request forbidden for '${repoSlug}'.`);
+  }
+
+  throw new Error(`Unable to check repository '${repoSlug}' right now.`);
+}
+
+/**
  * Fetches repository info from GitHub REST API
  */
 export async function fetchGitHubRepoDetails(owner, repo) {
@@ -47,13 +67,7 @@ export async function fetchGitHubRepoDetails(owner, repo) {
   try {
     const response = await fetchFn(url, { headers: GITHUB_HEADERS });
     if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error(`Repository '${repoSlug}' could not be found.`);
-      }
-      if (response.status === 403) {
-        throw new Error(`GitHub API rate limit reached. Please try again later.`);
-      }
-      throw new Error(`Unable to check repository '${repoSlug}' right now.`);
+      handleGitHubResponseError(response, repoSlug);
     }
 
     const data = await response.json();
@@ -84,13 +98,7 @@ export async function fetchGitHubCommits(owner, repo, limit = 15) {
   try {
     const response = await fetchFn(url, { headers: GITHUB_HEADERS });
     if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error(`Repository '${repoSlug}' could not be found.`);
-      }
-      if (response.status === 403) {
-        throw new Error(`GitHub API rate limit reached. Please try again later.`);
-      }
-      throw new Error(`Unable to check repository '${repoSlug}' right now.`);
+      handleGitHubResponseError(response, repoSlug);
     }
 
     const commitsData = await response.json();
@@ -122,7 +130,7 @@ export async function fetchGitHubDiff(owner, repo, baseSha, headSha) {
   try {
     const response = await fetchFn(url, { headers: GITHUB_HEADERS });
     if (!response.ok) {
-      throw new Error(`Failed to compare commits ${baseSha.substring(0,7)}...${headSha.substring(0,7)} on GitHub (${response.status})`);
+      handleGitHubResponseError(response, repoSlug);
     }
 
     const compareData = await response.json();

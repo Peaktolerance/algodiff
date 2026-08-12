@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { parseGitHubInput, fetchGitHubRepoDetails } from './clients/githubClient.js';
+import { parseGitHubInput, fetchGitHubRepoDetails, fetchGitHubCommits, fetchGitHubDiff } from './clients/githubClient.js';
 import { watcherStore } from './storage/watcherStore.js';
 import { checkRepo, checkAllRepos, startPolling } from './watcher/repoWatcher.js';
 
@@ -278,6 +278,44 @@ app.get('/api/watch/repos/:owner/:repo', (req, res) => {
     repo,
     updates: repoActivity,
   });
+});
+
+// ==========================================
+// GITHUB REST API PROXY ENDPOINTS (Manual Diff)
+// ==========================================
+
+// GET /api/github/repos/:owner/:repo - Repo Details Proxy
+app.get('/api/github/repos/:owner/:repo', async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const repoDetails = await fetchGitHubRepoDetails(owner, repo);
+    return res.status(200).json(repoDetails);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to fetch repository details' });
+  }
+});
+
+// GET /api/github/repos/:owner/:repo/commits - Commit History Proxy
+app.get('/api/github/repos/:owner/:repo/commits', async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const limit = parseInt(req.query.per_page, 10) || 25;
+    const commits = await fetchGitHubCommits(owner, repo, limit);
+    return res.status(200).json(commits);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to fetch commit list' });
+  }
+});
+
+// GET /api/github/repos/:owner/:repo/compare/:baseSha...:headSha - Diff Comparison Proxy
+app.get('/api/github/repos/:owner/:repo/compare/:baseSha...:headSha', async (req, res) => {
+  try {
+    const { owner, repo, baseSha, headSha } = req.params;
+    const diffData = await fetchGitHubDiff(owner, repo, baseSha, headSha);
+    return res.status(200).json(diffData);
+  } catch (err) {
+    return res.status(400).json({ error: err.message || 'Failed to compare commits' });
+  }
 });
 
 app.listen(PORT, HOST, () => {
