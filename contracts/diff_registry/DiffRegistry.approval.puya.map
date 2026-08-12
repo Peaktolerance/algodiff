@@ -1,0 +1,2199 @@
+{
+  "version": 3,
+  "sources": [
+    "contract.py"
+  ],
+  "mappings": ";;;;;;;;;;;;;;;AAaA;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;;;;;;;;;AASK;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAasB;;AAAA;AAAA;;AAC3B;AAAA;AAKqB;;AAET;;AACE;AADF;AAAA;;AAAA;AAGE;AAHF;AAAA;;AAAA;AAKE;AALF;AAAA;;AAAA;AAOE;AAPF;AAAA;AAAA;AASE;AATF;AAUU;;AAAR;AAVF;AAcJ;AAnCH;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAuCA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAKsB;AACnB;AANH;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AASA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAKsB;AAChB;;;;;AACQ;AAPd;;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;;;;;;;;;;AAAA",
+  "op_pc_offset": 0,
+  "pc_events": {
+    "1": {
+      "subroutine": "algopy.arc4.ARC4Contract.approval_program",
+      "params": {},
+      "block": "main",
+      "stack_in": [],
+      "op": "intcblock 0 2 1"
+    },
+    "6": {
+      "op": "bytecblock 0x7c 0x151f7c75"
+    },
+    "15": {
+      "op": "txn NumAppArgs",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "17": {
+      "op": "bz main___algopy_default_create@12",
+      "stack_out": []
+    },
+    "20": {
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "22": {
+      "op": "!",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "23": {
+      "op": "assert",
+      "stack_out": []
+    },
+    "24": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "26": {
+      "op": "assert",
+      "stack_out": []
+    },
+    "27": {
+      "op": "pushbytess 0x3cf7006c 0x32a99ff7 0xe48bdad3 // method \"register_diff(byte[],string,string,string,string)string\", method \"get_diff(byte[])string\", method \"verify_diff(byte[],string)bool\"",
+      "defined_out": [
+        "Method(get_diff(byte[])string)",
+        "Method(register_diff(byte[],string,string,string,string)string)",
+        "Method(verify_diff(byte[],string)bool)"
+      ],
+      "stack_out": [
+        "Method(register_diff(byte[],string,string,string,string)string)",
+        "Method(get_diff(byte[])string)",
+        "Method(verify_diff(byte[],string)bool)"
+      ]
+    },
+    "44": {
+      "op": "txna ApplicationArgs 0",
+      "defined_out": [
+        "Method(get_diff(byte[])string)",
+        "Method(register_diff(byte[],string,string,string,string)string)",
+        "Method(verify_diff(byte[],string)bool)",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "Method(register_diff(byte[],string,string,string,string)string)",
+        "Method(get_diff(byte[])string)",
+        "Method(verify_diff(byte[],string)bool)",
+        "tmp%6#0"
+      ]
+    },
+    "47": {
+      "op": "match register_diff get_diff verify_diff",
+      "stack_out": []
+    },
+    "55": {
+      "op": "err"
+    },
+    "56": {
+      "block": "main___algopy_default_create@12",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "tmp%7#0"
+      ]
+    },
+    "58": {
+      "op": "!",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "59": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ]
+    },
+    "61": {
+      "op": "!",
+      "defined_out": [
+        "tmp%10#0",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%10#0"
+      ]
+    },
+    "62": {
+      "op": "&&",
+      "defined_out": [
+        "tmp%11#0"
+      ],
+      "stack_out": [
+        "tmp%11#0"
+      ]
+    },
+    "63": {
+      "op": "return",
+      "defined_out": [],
+      "stack_out": []
+    },
+    "64": {
+      "subroutine": "contract.DiffRegistry.register_diff[routing]",
+      "params": {},
+      "block": "register_diff",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "67": {
+      "op": "dup",
+      "defined_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "68": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "0",
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)",
+        "0"
+      ]
+    },
+    "69": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0"
+      ]
+    },
+    "70": {
+      "op": "intc_1 // 2",
+      "defined_out": [
+        "2",
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0",
+        "2"
+      ]
+    },
+    "71": {
+      "op": "+",
+      "defined_out": [
+        "add%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0"
+      ]
+    },
+    "72": {
+      "op": "dig 1",
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "74": {
+      "op": "len",
+      "defined_out": [
+        "add%0#0",
+        "len%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "len%0#0"
+      ]
+    },
+    "75": {
+      "op": "==",
+      "defined_out": [
+        "eq%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "eq%0#0"
+      ]
+    },
+    "76": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "77": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0"
+      ]
+    },
+    "80": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ]
+    },
+    "83": {
+      "op": "dup",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)"
+      ]
+    },
+    "84": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)",
+        "0"
+      ]
+    },
+    "85": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%1#0",
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "aggregate%array_length%1#0"
+      ]
+    },
+    "86": {
+      "op": "intc_1 // 2",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "aggregate%array_length%1#0",
+        "2"
+      ]
+    },
+    "87": {
+      "op": "+",
+      "defined_out": [
+        "add%1#0",
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0"
+      ]
+    },
+    "88": {
+      "op": "dig 1",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0",
+        "tmp%2#0 (copy)"
+      ]
+    },
+    "90": {
+      "op": "len",
+      "defined_out": [
+        "add%1#0",
+        "diff_id#0",
+        "len%1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0",
+        "len%1#0"
+      ]
+    },
+    "91": {
+      "op": "==",
+      "defined_out": [
+        "diff_id#0",
+        "eq%1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "eq%1#0"
+      ]
+    },
+    "92": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ]
+    },
+    "93": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0",
+        "repo_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0"
+      ]
+    },
+    "96": {
+      "op": "txna ApplicationArgs 3",
+      "defined_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ]
+    },
+    "99": {
+      "op": "dup",
+      "defined_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "tmp%4#0 (copy)"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "tmp%4#0 (copy)"
+      ]
+    },
+    "100": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "tmp%4#0 (copy)",
+        "0"
+      ]
+    },
+    "101": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%2#0",
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "aggregate%array_length%2#0"
+      ]
+    },
+    "102": {
+      "op": "intc_1 // 2",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "aggregate%array_length%2#0",
+        "2"
+      ]
+    },
+    "103": {
+      "op": "+",
+      "defined_out": [
+        "add%2#0",
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "add%2#0"
+      ]
+    },
+    "104": {
+      "op": "dig 1",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "add%2#0",
+        "tmp%4#0 (copy)"
+      ]
+    },
+    "106": {
+      "op": "len",
+      "defined_out": [
+        "add%2#0",
+        "diff_id#0",
+        "len%2#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "add%2#0",
+        "len%2#0"
+      ]
+    },
+    "107": {
+      "op": "==",
+      "defined_out": [
+        "diff_id#0",
+        "eq%2#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0",
+        "eq%2#0"
+      ]
+    },
+    "108": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "tmp%4#0"
+      ]
+    },
+    "109": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0"
+      ]
+    },
+    "112": {
+      "op": "txna ApplicationArgs 4",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0"
+      ]
+    },
+    "115": {
+      "op": "dup",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%6#0",
+        "tmp%6#0 (copy)"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "tmp%6#0 (copy)"
+      ]
+    },
+    "116": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "tmp%6#0 (copy)",
+        "0"
+      ]
+    },
+    "117": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%3#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "aggregate%array_length%3#0"
+      ]
+    },
+    "118": {
+      "op": "intc_1 // 2",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "aggregate%array_length%3#0",
+        "2"
+      ]
+    },
+    "119": {
+      "op": "+",
+      "defined_out": [
+        "add%3#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "add%3#0"
+      ]
+    },
+    "120": {
+      "op": "dig 1",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "add%3#0",
+        "tmp%6#0 (copy)"
+      ]
+    },
+    "122": {
+      "op": "len",
+      "defined_out": [
+        "add%3#0",
+        "diff_id#0",
+        "from_commit#0",
+        "len%3#0",
+        "repo_id#0",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "add%3#0",
+        "len%3#0"
+      ]
+    },
+    "123": {
+      "op": "==",
+      "defined_out": [
+        "diff_id#0",
+        "eq%3#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0",
+        "eq%3#0"
+      ]
+    },
+    "124": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "tmp%6#0"
+      ]
+    },
+    "125": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0"
+      ]
+    },
+    "128": {
+      "op": "txna ApplicationArgs 5",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0"
+      ]
+    },
+    "131": {
+      "op": "dup",
+      "defined_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "tmp%8#0 (copy)",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "tmp%8#0 (copy)"
+      ]
+    },
+    "132": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "tmp%8#0 (copy)",
+        "0"
+      ]
+    },
+    "133": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%4#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "aggregate%array_length%4#0"
+      ]
+    },
+    "134": {
+      "op": "intc_1 // 2",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "aggregate%array_length%4#0",
+        "2"
+      ]
+    },
+    "135": {
+      "op": "+",
+      "defined_out": [
+        "add%4#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "add%4#0"
+      ]
+    },
+    "136": {
+      "op": "dig 1",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "add%4#0",
+        "tmp%8#0 (copy)"
+      ]
+    },
+    "138": {
+      "op": "len",
+      "defined_out": [
+        "add%4#0",
+        "diff_id#0",
+        "from_commit#0",
+        "len%4#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "add%4#0",
+        "len%4#0"
+      ]
+    },
+    "139": {
+      "op": "==",
+      "defined_out": [
+        "diff_id#0",
+        "eq%4#0",
+        "from_commit#0",
+        "repo_id#0",
+        "tmp%8#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0",
+        "eq%4#0"
+      ]
+    },
+    "140": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "tmp%8#0"
+      ]
+    },
+    "141": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0"
+      ]
+    },
+    "144": {
+      "op": "dig 4",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "diff_id#0 (copy)",
+        "from_commit#0",
+        "repo_id#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "diff_id#0 (copy)"
+      ]
+    },
+    "146": {
+      "op": "box_len",
+      "defined_out": [
+        "box_data#0",
+        "diff_hash#0",
+        "diff_id#0",
+        "exists#0",
+        "from_commit#0",
+        "repo_id#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "box_data#0",
+        "exists#0"
+      ]
+    },
+    "147": {
+      "op": "bury 1",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "exists#0"
+      ]
+    },
+    "149": {
+      "op": "!",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "from_commit#0",
+        "not%exists#0",
+        "repo_id#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "not%exists#0"
+      ]
+    },
+    "150": {
+      "error": "Contribution proof already registered",
+      "op": "assert // Contribution proof already registered",
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0"
+      ]
+    },
+    "151": {
+      "op": "txn Sender",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "sender_str#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "repo_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0"
+      ]
+    },
+    "153": {
+      "op": "uncover 4",
+      "stack_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "repo_id#0"
+      ]
+    },
+    "155": {
+      "op": "bytec_0 // 0x7c",
+      "defined_out": [
+        "0x7c",
+        "diff_hash#0",
+        "diff_id#0",
+        "from_commit#0",
+        "repo_id#0",
+        "sender_str#0",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "repo_id#0",
+        "0x7c"
+      ]
+    },
+    "156": {
+      "op": "concat",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "from_commit#0",
+        "sender_str#0",
+        "tmp%3#1",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "from_commit#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%3#1"
+      ]
+    },
+    "157": {
+      "op": "uncover 4",
+      "stack_out": [
+        "diff_id#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%3#1",
+        "from_commit#0"
+      ]
+    },
+    "159": {
+      "op": "concat",
+      "stack_out": [
+        "diff_id#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%4#0"
+      ]
+    },
+    "160": {
+      "op": "bytec_0 // 0x7c",
+      "stack_out": [
+        "diff_id#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%4#0",
+        "0x7c"
+      ]
+    },
+    "161": {
+      "op": "concat",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%5#1",
+        "to_commit#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "to_commit#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%5#1"
+      ]
+    },
+    "162": {
+      "op": "uncover 3",
+      "stack_out": [
+        "diff_id#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%5#1",
+        "to_commit#0"
+      ]
+    },
+    "164": {
+      "op": "concat",
+      "stack_out": [
+        "diff_id#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%6#0"
+      ]
+    },
+    "165": {
+      "op": "bytec_0 // 0x7c",
+      "stack_out": [
+        "diff_id#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%6#0",
+        "0x7c"
+      ]
+    },
+    "166": {
+      "op": "concat",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%7#1"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "diff_hash#0",
+        "sender_str#0",
+        "tmp%7#1"
+      ]
+    },
+    "167": {
+      "op": "uncover 2",
+      "stack_out": [
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%7#1",
+        "diff_hash#0"
+      ]
+    },
+    "169": {
+      "op": "concat",
+      "stack_out": [
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%8#0"
+      ]
+    },
+    "170": {
+      "op": "bytec_0 // 0x7c",
+      "stack_out": [
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%8#0",
+        "0x7c"
+      ]
+    },
+    "171": {
+      "op": "concat",
+      "defined_out": [
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%9#1"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "sender_str#0",
+        "tmp%9#1"
+      ]
+    },
+    "172": {
+      "op": "swap",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%9#1",
+        "sender_str#0"
+      ]
+    },
+    "173": {
+      "op": "concat",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%10#1"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%10#1"
+      ]
+    },
+    "174": {
+      "op": "bytec_0 // 0x7c",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%10#1",
+        "0x7c"
+      ]
+    },
+    "175": {
+      "op": "concat",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%11#1"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%11#1"
+      ]
+    },
+    "176": {
+      "op": "global LatestTimestamp",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%11#1",
+        "tmp%12#1"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%11#1",
+        "tmp%12#1"
+      ]
+    },
+    "178": {
+      "op": "itob",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%11#1",
+        "tmp%13#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%11#1",
+        "tmp%13#0"
+      ]
+    },
+    "179": {
+      "op": "concat",
+      "defined_out": [
+        "diff_id#0",
+        "record_value#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "record_value#0"
+      ]
+    },
+    "180": {
+      "op": "box_put",
+      "stack_out": []
+    },
+    "181": {
+      "op": "pushbytes 0x151f7c75001050524f4f465f52454749535445524544",
+      "defined_out": [
+        "0x151f7c75001050524f4f465f52454749535445524544"
+      ],
+      "stack_out": [
+        "0x151f7c75001050524f4f465f52454749535445524544"
+      ]
+    },
+    "205": {
+      "op": "log",
+      "stack_out": []
+    },
+    "206": {
+      "op": "intc_2 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "207": {
+      "op": "return",
+      "stack_out": []
+    },
+    "208": {
+      "subroutine": "contract.DiffRegistry.get_diff[routing]",
+      "params": {},
+      "block": "get_diff",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "211": {
+      "op": "dup",
+      "defined_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "212": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "0",
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)",
+        "0"
+      ]
+    },
+    "213": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0"
+      ]
+    },
+    "214": {
+      "op": "intc_1 // 2",
+      "defined_out": [
+        "2",
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0",
+        "2"
+      ]
+    },
+    "215": {
+      "op": "+",
+      "defined_out": [
+        "add%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0"
+      ]
+    },
+    "216": {
+      "op": "dig 1",
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "218": {
+      "op": "len",
+      "defined_out": [
+        "add%0#0",
+        "len%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "len%0#0"
+      ]
+    },
+    "219": {
+      "op": "==",
+      "defined_out": [
+        "eq%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "eq%0#0"
+      ]
+    },
+    "220": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "221": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0"
+      ]
+    },
+    "224": {
+      "op": "box_get",
+      "defined_out": [
+        "box_data#0",
+        "exists#0"
+      ],
+      "stack_out": [
+        "box_data#0",
+        "exists#0"
+      ]
+    },
+    "225": {
+      "error": "Proof not found",
+      "op": "assert // Proof not found",
+      "stack_out": [
+        "box_data#0"
+      ]
+    },
+    "226": {
+      "op": "dup",
+      "defined_out": [
+        "box_data#0",
+        "box_data#0 (copy)"
+      ],
+      "stack_out": [
+        "box_data#0",
+        "box_data#0 (copy)"
+      ]
+    },
+    "227": {
+      "op": "len",
+      "defined_out": [
+        "aggregate%length%0#0",
+        "box_data#0"
+      ],
+      "stack_out": [
+        "box_data#0",
+        "aggregate%length%0#0"
+      ]
+    },
+    "228": {
+      "op": "itob",
+      "defined_out": [
+        "aggregate%as_bytes%0#0",
+        "box_data#0"
+      ],
+      "stack_out": [
+        "box_data#0",
+        "aggregate%as_bytes%0#0"
+      ]
+    },
+    "229": {
+      "op": "extract 6 2",
+      "defined_out": [
+        "aggregate%length_uint16%0#0",
+        "box_data#0"
+      ],
+      "stack_out": [
+        "box_data#0",
+        "aggregate%length_uint16%0#0"
+      ]
+    },
+    "232": {
+      "op": "swap",
+      "stack_out": [
+        "aggregate%length_uint16%0#0",
+        "box_data#0"
+      ]
+    },
+    "233": {
+      "op": "concat",
+      "defined_out": [
+        "aggregate%encoded_value%0#0"
+      ],
+      "stack_out": [
+        "aggregate%encoded_value%0#0"
+      ]
+    },
+    "234": {
+      "op": "bytec_1 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "aggregate%encoded_value%0#0"
+      ],
+      "stack_out": [
+        "aggregate%encoded_value%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "235": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "aggregate%encoded_value%0#0"
+      ]
+    },
+    "236": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "237": {
+      "op": "log",
+      "stack_out": []
+    },
+    "238": {
+      "op": "intc_2 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "239": {
+      "op": "return",
+      "stack_out": []
+    },
+    "240": {
+      "subroutine": "contract.DiffRegistry.verify_diff[routing]",
+      "params": {},
+      "block": "verify_diff",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "243": {
+      "op": "dup",
+      "defined_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "244": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "0",
+        "tmp%0#0",
+        "tmp%0#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "tmp%0#0 (copy)",
+        "0"
+      ]
+    },
+    "245": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0"
+      ]
+    },
+    "246": {
+      "op": "intc_1 // 2",
+      "defined_out": [
+        "2",
+        "aggregate%array_length%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "aggregate%array_length%0#0",
+        "2"
+      ]
+    },
+    "247": {
+      "op": "+",
+      "defined_out": [
+        "add%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0"
+      ]
+    },
+    "248": {
+      "op": "dig 1",
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "tmp%0#0 (copy)"
+      ]
+    },
+    "250": {
+      "op": "len",
+      "defined_out": [
+        "add%0#0",
+        "len%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "add%0#0",
+        "len%0#0"
+      ]
+    },
+    "251": {
+      "op": "==",
+      "defined_out": [
+        "eq%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "eq%0#0"
+      ]
+    },
+    "252": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "253": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0"
+      ]
+    },
+    "256": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ]
+    },
+    "259": {
+      "op": "dup",
+      "defined_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)"
+      ]
+    },
+    "260": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "tmp%2#0 (copy)",
+        "0"
+      ]
+    },
+    "261": {
+      "error": "invalid array length header",
+      "op": "extract_uint16 // on error: invalid array length header",
+      "defined_out": [
+        "aggregate%array_length%1#0",
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "aggregate%array_length%1#0"
+      ]
+    },
+    "262": {
+      "op": "intc_1 // 2",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "aggregate%array_length%1#0",
+        "2"
+      ]
+    },
+    "263": {
+      "op": "+",
+      "defined_out": [
+        "add%1#0",
+        "diff_id#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0"
+      ]
+    },
+    "264": {
+      "op": "dig 1",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0",
+        "tmp%2#0 (copy)"
+      ]
+    },
+    "266": {
+      "op": "len",
+      "defined_out": [
+        "add%1#0",
+        "diff_id#0",
+        "len%1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "add%1#0",
+        "len%1#0"
+      ]
+    },
+    "267": {
+      "op": "==",
+      "defined_out": [
+        "diff_id#0",
+        "eq%1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0",
+        "eq%1#0"
+      ]
+    },
+    "268": {
+      "error": "invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "op": "assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>",
+      "stack_out": [
+        "diff_id#0",
+        "tmp%2#0"
+      ]
+    },
+    "269": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0"
+      ],
+      "stack_out": [
+        "diff_id#0",
+        "diff_hash#0"
+      ]
+    },
+    "272": {
+      "op": "swap",
+      "defined_out": [
+        "diff_hash#0",
+        "diff_id#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "diff_id#0"
+      ]
+    },
+    "273": {
+      "op": "box_get",
+      "defined_out": [
+        "box_data#0",
+        "diff_hash#0",
+        "exists#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "exists#0"
+      ]
+    },
+    "274": {
+      "op": "bnz verify_diff_after_if_else@3",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0"
+      ]
+    },
+    "277": {
+      "op": "popn 2",
+      "stack_out": []
+    },
+    "279": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "280": {
+      "block": "verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4",
+      "stack_in": [
+        "tmp%4#0"
+      ],
+      "op": "pushbytes 0x00",
+      "defined_out": [
+        "0x00"
+      ],
+      "stack_out": [
+        "tmp%4#0",
+        "0x00"
+      ]
+    },
+    "283": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "0",
+        "0x00"
+      ],
+      "stack_out": [
+        "tmp%4#0",
+        "0x00",
+        "0"
+      ]
+    },
+    "284": {
+      "op": "uncover 2",
+      "defined_out": [
+        "0",
+        "0x00",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "0x00",
+        "0",
+        "tmp%4#0"
+      ]
+    },
+    "286": {
+      "op": "setbit",
+      "defined_out": [
+        "aggregate%encoded_bool%0#0"
+      ],
+      "stack_out": [
+        "aggregate%encoded_bool%0#0"
+      ]
+    },
+    "287": {
+      "op": "bytec_1 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "aggregate%encoded_bool%0#0"
+      ],
+      "stack_out": [
+        "aggregate%encoded_bool%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "288": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "aggregate%encoded_bool%0#0"
+      ]
+    },
+    "289": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "tmp%6#0"
+      ]
+    },
+    "290": {
+      "op": "log",
+      "stack_out": []
+    },
+    "291": {
+      "op": "intc_2 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "292": {
+      "op": "return",
+      "stack_out": []
+    },
+    "293": {
+      "block": "verify_diff_after_if_else@3",
+      "stack_in": [
+        "diff_hash#0",
+        "box_data#0"
+      ],
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "start#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0"
+      ]
+    },
+    "294": {
+      "block": "verify_diff_while_top@6",
+      "stack_in": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0"
+      ],
+      "op": "dig 2",
+      "defined_out": [
+        "diff_hash#0 (copy)"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "diff_hash#0 (copy)"
+      ]
+    },
+    "296": {
+      "op": "len",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%0#1"
+      ]
+    },
+    "297": {
+      "op": "dig 1",
+      "defined_out": [
+        "start#0 (copy)",
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%0#1",
+        "start#0 (copy)"
+      ]
+    },
+    "299": {
+      "op": "+",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0"
+      ]
+    },
+    "300": {
+      "op": "dup",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "tmp%1#0"
+      ]
+    },
+    "301": {
+      "op": "dig 3",
+      "defined_out": [
+        "box_data#0 (copy)",
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "tmp%1#0",
+        "box_data#0 (copy)"
+      ]
+    },
+    "303": {
+      "op": "len",
+      "defined_out": [
+        "tmp%1#0",
+        "tmp%2#2"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "tmp%1#0",
+        "tmp%2#2"
+      ]
+    },
+    "304": {
+      "op": "<=",
+      "defined_out": [
+        "tmp%1#0",
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "tmp%3#0"
+      ]
+    },
+    "305": {
+      "op": "bz verify_diff_after_while@10",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0"
+      ]
+    },
+    "308": {
+      "op": "dig 2",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "box_data#0 (copy)"
+      ]
+    },
+    "310": {
+      "op": "dig 2",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0",
+        "box_data#0 (copy)",
+        "start#0 (copy)"
+      ]
+    },
+    "312": {
+      "op": "uncover 2",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "box_data#0 (copy)",
+        "start#0 (copy)",
+        "tmp%1#0"
+      ]
+    },
+    "314": {
+      "op": "substring3",
+      "defined_out": [
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%6#0"
+      ]
+    },
+    "315": {
+      "op": "dig 3",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%6#0",
+        "diff_hash#0 (copy)"
+      ]
+    },
+    "317": {
+      "op": "==",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%7#0"
+      ]
+    },
+    "318": {
+      "op": "bz verify_diff_after_if_else@9",
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0"
+      ]
+    },
+    "321": {
+      "op": "popn 3",
+      "defined_out": [],
+      "stack_out": []
+    },
+    "323": {
+      "op": "intc_2 // 1",
+      "defined_out": [
+        "tmp%2#1"
+      ],
+      "stack_out": [
+        "tmp%2#1"
+      ]
+    },
+    "324": {
+      "op": "b verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "327": {
+      "block": "verify_diff_after_if_else@9",
+      "stack_in": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0"
+      ],
+      "op": "intc_2 // 1",
+      "defined_out": [
+        "1",
+        "start#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "1"
+      ]
+    },
+    "328": {
+      "op": "+",
+      "defined_out": [
+        "start#0"
+      ],
+      "stack_out": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0"
+      ]
+    },
+    "329": {
+      "op": "b verify_diff_while_top@6"
+    },
+    "332": {
+      "block": "verify_diff_after_while@10",
+      "stack_in": [
+        "diff_hash#0",
+        "box_data#0",
+        "start#0",
+        "tmp%1#0"
+      ],
+      "op": "popn 4",
+      "defined_out": [],
+      "stack_out": []
+    },
+    "334": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "tmp%2#1"
+      ],
+      "stack_out": [
+        "tmp%2#1"
+      ]
+    },
+    "335": {
+      "op": "b verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    }
+  }
+}

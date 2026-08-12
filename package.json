@@ -1,0 +1,38 @@
+{
+  "name": "hack",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "x402-server": "node server/x402Server.js",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@perawallet/connect": "^1.6.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@x402/avm": "^2.21.0",
+    "@x402/core": "^2.21.0",
+    "@x402/express": "^2.21.0",
+    "@x402/fetch": "^2.21.0",
+    "algosdk": "^3.6.0",
+    "cors": "^2.8.6",
+    "diff": "^9.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "isomorphic-git": "^1.41.3",
+    "lucide-react": "^1.31.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "oxlint": "^1.75.0",
+    "vite": "^8.2.0"
+  }
+}

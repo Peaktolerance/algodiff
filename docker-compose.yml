@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - x402-server
+    restart: always
+
+  x402-server:
+    build:
+      context: .
+      dockerfile: x402.Dockerfile
+    ports:
+      - "4020:4020"
+    environment:
+      - PORT=4020
+      - HOST=0.0.0.0
+      - ALLOWED_ORIGIN=*
+    restart: always

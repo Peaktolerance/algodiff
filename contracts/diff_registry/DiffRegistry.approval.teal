@@ -1,0 +1,354 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 0 2 1
+    bytecblock 0x7c 0x151f7c75
+    // contracts/diff_registry/contract.py:14
+    // class DiffRegistry(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@12
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    pushbytess 0x3cf7006c 0x32a99ff7 0xe48bdad3 // method "register_diff(byte[],string,string,string,string)string", method "get_diff(byte[])string", method "verify_diff(byte[],string)bool"
+    txna ApplicationArgs 0
+    match register_diff get_diff verify_diff
+    err
+
+main___algopy_default_create@12:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// contract.DiffRegistry.register_diff[routing]() -> void:
+register_diff:
+    // contracts/diff_registry/contract.py:23
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 3
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 4
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 5
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // contracts/diff_registry/contract.py:35-36
+    // # Check if box already exists
+    // box_data, exists = op.Box.get(diff_id)
+    dig 4
+    box_len
+    bury 1
+    // contracts/diff_registry/contract.py:37
+    // if exists:
+    !
+    assert // Contribution proof already registered
+    // contracts/diff_registry/contract.py:40-42
+    // # Construct serialized record string:
+    // # repo_id|from_commit|to_commit|diff_hash|submitter|timestamp
+    // sender_str = Txn.sender.bytes
+    txn Sender
+    // contracts/diff_registry/contract.py:44-45
+    // repo_id.bytes
+    // + Bytes(b"|")
+    uncover 4
+    // contracts/diff_registry/contract.py:45
+    // + Bytes(b"|")
+    bytec_0 // 0x7c
+    // contracts/diff_registry/contract.py:44-45
+    // repo_id.bytes
+    // + Bytes(b"|")
+    concat
+    // contracts/diff_registry/contract.py:44-46
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    uncover 4
+    concat
+    // contracts/diff_registry/contract.py:47
+    // + Bytes(b"|")
+    bytec_0 // 0x7c
+    // contracts/diff_registry/contract.py:44-47
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    concat
+    // contracts/diff_registry/contract.py:44-48
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    uncover 3
+    concat
+    // contracts/diff_registry/contract.py:49
+    // + Bytes(b"|")
+    bytec_0 // 0x7c
+    // contracts/diff_registry/contract.py:44-49
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    concat
+    // contracts/diff_registry/contract.py:44-50
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    // + diff_hash.bytes
+    uncover 2
+    concat
+    // contracts/diff_registry/contract.py:51
+    // + Bytes(b"|")
+    bytec_0 // 0x7c
+    // contracts/diff_registry/contract.py:44-51
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    // + diff_hash.bytes
+    // + Bytes(b"|")
+    concat
+    // contracts/diff_registry/contract.py:44-52
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    // + diff_hash.bytes
+    // + Bytes(b"|")
+    // + sender_str
+    swap
+    concat
+    // contracts/diff_registry/contract.py:53
+    // + Bytes(b"|")
+    bytec_0 // 0x7c
+    // contracts/diff_registry/contract.py:44-53
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    // + diff_hash.bytes
+    // + Bytes(b"|")
+    // + sender_str
+    // + Bytes(b"|")
+    concat
+    // contracts/diff_registry/contract.py:54
+    // + op.itob(Global.latest_timestamp)
+    global LatestTimestamp
+    itob
+    // contracts/diff_registry/contract.py:44-54
+    // repo_id.bytes
+    // + Bytes(b"|")
+    // + from_commit.bytes
+    // + Bytes(b"|")
+    // + to_commit.bytes
+    // + Bytes(b"|")
+    // + diff_hash.bytes
+    // + Bytes(b"|")
+    // + sender_str
+    // + Bytes(b"|")
+    // + op.itob(Global.latest_timestamp)
+    concat
+    // contracts/diff_registry/contract.py:57-58
+    // # Store in Algorand Box Storage
+    // op.Box.put(diff_id, record_value)
+    box_put
+    // contracts/diff_registry/contract.py:23
+    // @arc4.abimethod
+    pushbytes 0x151f7c75001050524f4f465f52454749535445524544
+    log
+    intc_2 // 1
+    return
+
+
+// contract.DiffRegistry.get_diff[routing]() -> void:
+get_diff:
+    // contracts/diff_registry/contract.py:62
+    // @arc4.abimethod(readonly=True)
+    txna ApplicationArgs 1
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // contracts/diff_registry/contract.py:67
+    // box_data, exists = op.Box.get(diff_id)
+    box_get
+    // contracts/diff_registry/contract.py:68
+    // assert exists, "Proof not found"
+    assert // Proof not found
+    // contracts/diff_registry/contract.py:62
+    // @arc4.abimethod(readonly=True)
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// contract.DiffRegistry.verify_diff[routing]() -> void:
+verify_diff:
+    // contracts/diff_registry/contract.py:71
+    // @arc4.abimethod(readonly=True)
+    txna ApplicationArgs 1
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_1 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    swap
+    // contracts/diff_registry/contract.py:76
+    // box_data, exists = op.Box.get(diff_id)
+    box_get
+    // contracts/diff_registry/contract.py:77
+    // if not exists:
+    bnz verify_diff_after_if_else@3
+    popn 2
+    // contracts/diff_registry/contract.py:78
+    // return False
+    intc_0 // 0
+
+verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4:
+    // contracts/diff_registry/contract.py:71
+    // @arc4.abimethod(readonly=True)
+    pushbytes 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_2 // 1
+    return
+
+verify_diff_after_if_else@3:
+    intc_0 // 0
+
+verify_diff_while_top@6:
+    dig 2
+    len
+    dig 1
+    +
+    dup
+    dig 3
+    len
+    <=
+    bz verify_diff_after_while@10
+    dig 2
+    dig 2
+    uncover 2
+    substring3
+    dig 3
+    ==
+    bz verify_diff_after_if_else@9
+    popn 3
+    intc_2 // 1
+    // contracts/diff_registry/contract.py:71
+    // @arc4.abimethod(readonly=True)
+    b verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4
+
+verify_diff_after_if_else@9:
+    intc_2 // 1
+    +
+    b verify_diff_while_top@6
+
+verify_diff_after_while@10:
+    popn 4
+    intc_0 // 0
+    // contracts/diff_registry/contract.py:71
+    // @arc4.abimethod(readonly=True)
+    b verify_diff_after_inlined_contract.DiffRegistry.verify_diff@4
