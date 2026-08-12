@@ -1,8 +1,9 @@
-# Environment & Secrets
+# Environment & Secrets (Never commit secrets)
 .env
 .env.local
 .env.production
 *.secret
+!.env.example
 
 # Logs
 logs
@@ -13,16 +14,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Node dependencies & Build outputs
+node_modules/
+dist/
+dist-ssr/
 *.local
 
-# Editor directories and files
+# Python Caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Runtime Data (Docker volume managed)
+server/data/*.json
+!server/data/.gitkeep
+
+# Editor & OS metadata
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

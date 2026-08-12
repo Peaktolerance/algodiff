@@ -5,7 +5,7 @@ import { executeX402Payment } from '../services/x402Client';
 import { registerDiffOnChain, resolveCanonicalAddress } from '../services/algorandClient';
 import DiffViewer from '../components/DiffViewer';
 import X402Modal from '../components/X402Modal';
-import { GitBranch, GitCommit, Fingerprint, ShieldCheck, CreditCard, ArrowRight, CheckCircle, Copy, Check, Loader2, RefreshCw, Code2 } from 'lucide-react';
+import { GitBranch, GitCommit, Fingerprint, ShieldCheck, CreditCard, ArrowRight, CheckCircle, Copy, Check, Loader2, RefreshCw, Code2, Layers } from 'lucide-react';
 
 export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBalance }) {
   // Source Mode: 'sample' or 'github'
@@ -118,10 +118,6 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
   const handleStartRegisterFlow = async () => {
     if (!hashResult) return;
 
-    console.log("[AlgoDiff DEBUG] BEFORE executeX402Payment wallet =", wallet);
-    console.log("[AlgoDiff DEBUG] wallet?.address =", wallet?.address);
-    console.log("[AlgoDiff DEBUG] typeof wallet?.address =", typeof wallet?.address);
-
     const senderAddress = resolveCanonicalAddress(wallet);
 
     setIsX402ModalOpen(true);
@@ -149,11 +145,6 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
     setIsRegisteringOnChain(true);
 
     const resolvedAddress = resolveCanonicalAddress(wallet);
-
-    console.log("[AlgoDiff DEBUG] AFTER x402 200 wallet =", wallet);
-    console.log("[AlgoDiff DEBUG] wallet?.address =", wallet?.address);
-    console.log("[AlgoDiff DEBUG] resolved address =", resolvedAddress);
-    console.log("[AlgoDiff DEBUG] typeof resolved address =", typeof resolvedAddress);
 
     try {
       const res = await registerDiffOnChain({
@@ -183,33 +174,33 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
   };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-12">
+    <div className="space-y-6 max-w-6xl mx-auto pb-12 animate-in fade-in duration-300">
       
       {/* Step Header */}
-      <div className="glass-panel p-6 border-l-4 border-l-cyan-500">
-        <h2 className="text-xl font-bold text-white font-mono flex items-center gap-2">
-          <GitBranch className="w-5 h-5 text-cyan-400" />
-          1. Select Repository Commits & Generate Diff
+      <div className="saas-card p-6 bg-white border-l-4 border-l-indigo-600">
+        <h2 className="text-xl font-bold text-slate-900 font-mono flex items-center gap-2">
+          <Layers className="w-5 h-5 text-indigo-600" />
+          Manual Diff & Proof Registration
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
-          Compare commits from demo repositories or load any Public GitHub Repository directly in browser.
+        <p className="text-xs text-slate-500 mt-1">
+          Select two commits from any repository, generate unified diff, compute canonical SHA-256 fingerprint, and register proof on Algorand TestNet.
         </p>
       </div>
 
       {/* Mode Selector & Repository Inputs */}
-      <div className="glass-panel p-6 space-y-6">
+      <div className="saas-card p-6 space-y-6">
         
         {/* Repo Mode Buttons */}
-        <div className="flex flex-wrap items-center gap-3 border-b border-slate-800 pb-4">
+        <div className="flex flex-wrap items-center gap-3 border-b border-slate-100 pb-4">
           <button
             onClick={handleSelectSampleRepo}
             className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono flex items-center gap-2 transition-all ${
               repoMode === 'sample'
-                ? 'bg-cyan-950 border border-cyan-500/50 text-cyan-300 shadow-md'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800'
+                ? 'bg-indigo-50 border border-indigo-200 text-indigo-700 shadow-xs'
+                : 'btn-secondary'
             }`}
           >
-            <GitCommit className="w-4 h-4 text-cyan-400" />
+            <GitCommit className="w-4 h-4 text-indigo-600" />
             TechMart Demo Repo
           </button>
 
@@ -217,19 +208,19 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
             onClick={() => setRepoMode('github')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold font-mono flex items-center gap-2 transition-all ${
               repoMode === 'github'
-                ? 'bg-cyan-950 border border-cyan-500/50 text-cyan-300 shadow-md'
-                : 'bg-slate-900 text-slate-400 hover:bg-slate-800'
+                ? 'bg-indigo-50 border border-indigo-200 text-indigo-700 shadow-xs'
+                : 'btn-secondary'
             }`}
           >
-            <Code2 className="w-4 h-4 text-white" />
+            <Code2 className="w-4 h-4 text-slate-700" />
             Public GitHub Repository
           </button>
         </div>
 
         {/* GitHub Repository Loader Controls */}
         {repoMode === 'github' && (
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <label className="block text-xs font-mono text-slate-300 font-semibold">
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Public GitHub Repository URL or Slug
             </label>
             <div className="flex gap-2">
@@ -238,19 +229,19 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
                 value={githubUrlInput}
                 onChange={(e) => setGithubUrlInput(e.target.value)}
                 placeholder="e.g. facebook/react or https://github.com/algorand/algosdk"
-                className="w-full bg-slate-900 border border-slate-700 text-slate-200 font-mono text-xs rounded-xl p-3 focus:ring-1 focus:ring-cyan-500"
+                className="w-full bg-white border border-slate-200 text-slate-900 font-mono text-xs rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               />
               <button
                 onClick={handleLoadGitHubRepo}
                 disabled={isLoadingRepo}
-                className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-5 py-3 rounded-xl text-xs font-bold font-mono flex items-center gap-2 shrink-0"
+                className="btn-primary px-5 py-3 rounded-xl text-xs flex items-center gap-2 shrink-0"
               >
                 {isLoadingRepo ? <Loader2 className="w-4 h-4 animate-spin" /> : <Code2 className="w-4 h-4" />}
                 Load Repository
               </button>
             </div>
             {repoError && (
-              <p className="text-xs text-rose-400 font-mono bg-rose-950/40 p-2.5 rounded border border-rose-800/50">
+              <p className="text-xs text-rose-700 font-mono bg-rose-50 p-2.5 rounded-lg border border-rose-200">
                 ⚠️ {repoError}
               </p>
             )}
@@ -260,20 +251,20 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
         {/* Selected Repository Card & Commit Selectors */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
           <div>
-            <label className="block text-xs font-mono text-slate-400 mb-2">Active Repository</label>
-            <div className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-3 font-mono">
-              <div className="font-bold text-cyan-300">{activeRepoData?.name}</div>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">Active Repository</label>
+            <div className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl p-3 font-mono">
+              <div className="font-bold text-indigo-700">{activeRepoData?.name}</div>
               <div className="text-[10px] text-slate-500 truncate mt-0.5">{activeRepoData?.id}</div>
             </div>
           </div>
 
           {/* FROM COMMIT Dropdown */}
           <div>
-            <label className="block text-xs font-mono text-slate-400 mb-2">FROM COMMIT (Base)</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">FROM COMMIT (Base)</label>
             <select
               value={fromCommitId}
               onChange={(e) => setFromCommitId(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 font-mono focus:ring-1 focus:ring-cyan-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl p-3 font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             >
               {activeRepoData?.commits.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -285,11 +276,11 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
 
           {/* TO COMMIT Dropdown */}
           <div>
-            <label className="block text-xs font-mono text-slate-400 mb-2">TO COMMIT (Target)</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">TO COMMIT (Target)</label>
             <select
               value={toCommitId}
               onChange={(e) => setToCommitId(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 font-mono focus:ring-1 focus:ring-cyan-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl p-3 font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             >
               {activeRepoData?.commits.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -303,7 +294,7 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
             <button
               onClick={handleGenerateDiff}
               disabled={isGeneratingDiff}
-              className="glow-btn-primary px-6 py-2.5 rounded-xl text-xs font-bold text-white flex items-center gap-2"
+              className="btn-primary px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-xs"
             >
               {isGeneratingDiff ? <Loader2 className="w-4 h-4 animate-spin" /> : <GitCommit className="w-4 h-4" />}
               Generate Diff & Compute Fingerprint
@@ -324,27 +315,27 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
 
           {/* Canonical Hash Card */}
           {hashResult && (
-            <div className="glass-panel-glow p-6 space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <div className="flex items-center gap-2 text-cyan-400 font-mono font-bold text-sm">
+            <div className="saas-card p-6 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2 text-indigo-700 font-mono font-bold text-sm">
                   <Fingerprint className="w-5 h-5" />
                   Canonical SHA-256 Contribution Fingerprint
                 </div>
-                <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">
+                <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono border border-slate-200 font-semibold">
                   Web Crypto API
                 </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-400 mb-1">
+                  <label className="block text-[11px] font-mono text-slate-500 uppercase tracking-wider mb-1 font-semibold">
                     SHA-256 Diff Hash (64 Hex Characters)
                   </label>
-                  <div className="bg-slate-950 p-3 rounded-xl border border-cyan-500/30 flex items-center justify-between">
-                    <span className="font-mono text-xs text-cyan-300 break-all">{hashResult.diffHash}</span>
+                  <div className="bg-slate-900 p-3 rounded-xl text-slate-200 font-mono text-xs flex items-center justify-between">
+                    <span className="text-emerald-400 font-bold break-all">{hashResult.diffHash}</span>
                     <button
                       onClick={() => copyToClipboard(hashResult.diffHash)}
-                      className="p-1.5 hover:bg-slate-800 rounded text-slate-400"
+                      className="p-1.5 hover:bg-slate-800 rounded text-slate-400 hover:text-white"
                     >
                       {copiedHash ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                     </button>
@@ -352,30 +343,30 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-400 mb-1">
+                  <label className="block text-[11px] font-mono text-slate-500 uppercase tracking-wider mb-1 font-semibold">
                     Deterministic On-Chain Box Key (diffId)
                   </label>
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <span className="font-mono text-xs text-emerald-400 break-all">{hashResult.diffId}</span>
+                  <div className="bg-slate-900 p-3 rounded-xl text-slate-200 font-mono text-xs">
+                    <span className="text-indigo-400 font-bold break-all">{hashResult.diffId}</span>
                   </div>
                 </div>
               </div>
 
               {/* Action: Pay x402 & Register on Algorand */}
-              <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-slate-800/80">
-                <div className="text-xs text-slate-400 font-mono space-y-1">
-                  <div className="flex items-center gap-2 text-amber-400">
-                    <CreditCard className="w-4 h-4" />
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100">
+                <div className="text-xs text-slate-600 font-mono space-y-1">
+                  <div className="flex items-center gap-2 text-amber-800 font-semibold">
+                    <CreditCard className="w-4 h-4 text-amber-600" />
                     <span>1. x402 Service Fee: <strong>0.001 ALGO</strong> (HTTP Pay-Per-Use Protocol)</span>
                   </div>
-                  <div className="flex items-center gap-2 text-cyan-400 pl-6">
+                  <div className="flex items-center gap-2 text-indigo-700 pl-6">
                     <span>2. Algorand Network Fee: <strong>0.001 ALGO</strong> (On-Chain Box Storage Transaction)</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handleStartRegisterFlow}
-                  className="glow-btn-algo px-6 py-3 rounded-xl text-xs font-bold text-white flex items-center gap-2 shadow-lg"
+                  className="btn-algo px-6 py-3 rounded-xl text-xs font-bold text-white flex items-center gap-2 shadow-xs"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   Pay Service Fee (x402) & Register Proof on Algorand
@@ -386,33 +377,33 @@ export default function RegisterPage({ wallet, onNavigateToVerify, onRefreshBala
 
           {/* On-Chain Success Result Card */}
           {chainResult && (
-            <div className="glass-panel p-6 border border-emerald-500/50 bg-emerald-950/20 space-y-4">
-              <div className="flex items-center gap-3 text-emerald-400 font-mono font-bold text-base">
-                <CheckCircle className="w-6 h-6" />
+            <div className="saas-card p-6 border border-emerald-300 bg-emerald-50/60 space-y-4">
+              <div className="flex items-center gap-3 text-emerald-800 font-mono font-bold text-base">
+                <CheckCircle className="w-6 h-6 text-emerald-600" />
                 ✓ Contribution Proof Registered on Algorand TestNet!
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-                <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                  <div className="text-slate-400 text-[10px]">Algorand App ID</div>
-                  <div className="text-cyan-300 font-bold mt-1">{chainResult.appId}</div>
+                <div className="bg-white p-3 rounded-xl border border-emerald-200">
+                  <div className="text-slate-500 text-[10px]">Algorand App ID</div>
+                  <div className="text-indigo-700 font-bold mt-1">{chainResult.appId}</div>
                 </div>
 
-                <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                  <div className="text-slate-400 text-[10px]">Block Round</div>
-                  <div className="text-emerald-400 font-bold mt-1">#{chainResult.confirmedRound}</div>
+                <div className="bg-white p-3 rounded-xl border border-emerald-200">
+                  <div className="text-slate-500 text-[10px]">Block Round</div>
+                  <div className="text-emerald-700 font-bold mt-1">#{chainResult.confirmedRound}</div>
                 </div>
 
-                <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                  <div className="text-slate-400 text-[10px]">Algorand Transaction ID</div>
-                  <div className="text-slate-200 font-bold mt-1 truncate">{chainResult.txId}</div>
+                <div className="bg-white p-3 rounded-xl border border-emerald-200">
+                  <div className="text-slate-500 text-[10px]">Algorand Transaction ID</div>
+                  <div className="text-slate-900 font-bold mt-1 truncate">{chainResult.txId}</div>
                 </div>
               </div>
 
               <div className="flex justify-end pt-2">
                 <button
                   onClick={() => onNavigateToVerify(hashResult.diffId)}
-                  className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 font-mono"
+                  className="btn-primary px-5 py-2 rounded-xl text-xs flex items-center gap-2 font-mono"
                 >
                   Verify Proof On-Chain <ArrowRight className="w-4 h-4" />
                 </button>

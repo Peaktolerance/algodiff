@@ -19,4 +19,9 @@ services:
       - PORT=4020
       - HOST=0.0.0.0
       - ALLOWED_ORIGIN=*
+    volumes:
+      - x402-data:/app/server/data
     restart: always
+
+volumes:
+  x402-data:

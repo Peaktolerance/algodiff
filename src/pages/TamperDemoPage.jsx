@@ -63,16 +63,16 @@ export default function TamperDemoPage() {
   const isMatch = originalHash.toLowerCase() === modifiedHash.toLowerCase();
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-12">
+    <div className="space-y-6 max-w-6xl mx-auto pb-12 animate-in fade-in duration-300">
       
       {/* Header Banner */}
-      <div className="glass-panel p-6 border-l-4 border-l-amber-500 flex flex-wrap items-center justify-between gap-4">
+      <div className="saas-card p-6 border-l-4 border-l-amber-500 bg-white flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white font-mono flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-amber-400" />
-            3. Interactive Tamper Detection Demo
+          <h2 className="text-xl font-bold text-slate-900 font-mono flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-amber-600" />
+            Interactive Tamper Detection Demo
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Demonstrates how altering a single character in the contribution diff invalidates the SHA-256 fingerprint on Algorand.
           </p>
         </div>
@@ -80,14 +80,14 @@ export default function TamperDemoPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleApplyPresetTamper}
-            className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold font-mono flex items-center gap-2 shadow-lg shadow-amber-600/30"
+            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-xl text-xs font-bold font-mono flex items-center gap-2 shadow-xs transition-colors"
           >
             <Zap className="w-4 h-4" />
             1-Click Tamper Diff (Add +1)
           </button>
           <button
             onClick={handleResetToOriginal}
-            className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold font-mono flex items-center gap-2"
+            className="btn-secondary px-4 py-2 rounded-xl text-xs font-semibold font-mono flex items-center gap-2"
           >
             <RefreshCcw className="w-4 h-4" />
             Reset Original
@@ -97,32 +97,32 @@ export default function TamperDemoPage() {
 
       {/* Main Status Indicator Banner */}
       {isMatch ? (
-        <div className="glass-panel p-6 border-2 border-emerald-500 bg-emerald-950/40 text-emerald-200 rounded-xl space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 text-emerald-400 font-mono font-bold text-xl">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+        <div className="saas-card p-6 border-2 border-emerald-500 bg-emerald-50 text-emerald-900 rounded-xl space-y-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3 text-emerald-700 font-mono font-bold text-lg">
+              <CheckCircle2 className="w-7 h-7 text-emerald-600" />
               ✓ VERIFIED: ORIGINAL CONTRIBUTION MATCHES ON-CHAIN PROOF
             </div>
-            <span className="text-xs font-mono bg-emerald-900/80 px-3 py-1 rounded-lg text-emerald-300 border border-emerald-500/40">
+            <span className="text-xs font-mono bg-emerald-100 px-3 py-1 rounded-lg text-emerald-800 border border-emerald-300 font-bold">
               HASH A === HASH B
             </span>
           </div>
-          <p className="text-xs font-mono text-emerald-300/90 pl-11">
+          <p className="text-xs font-mono text-emerald-800 pl-10">
             The canonical fingerprint generated from the diff matches the recorded Algorand TestNet commitment.
           </p>
         </div>
       ) : (
-        <div className="glass-panel p-6 border-2 border-rose-500 bg-rose-950/50 text-rose-200 rounded-xl space-y-2 animate-pulse">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 text-rose-400 font-mono font-bold text-xl">
-              <XCircle className="w-8 h-8 text-rose-500" />
+        <div className="saas-card p-6 border-2 border-rose-500 bg-rose-50 text-rose-900 rounded-xl space-y-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3 text-rose-700 font-mono font-bold text-lg">
+              <XCircle className="w-7 h-7 text-rose-600" />
               ✗ HASH MISMATCH / TAMPER DETECTED!
             </div>
-            <span className="text-xs font-mono bg-rose-900/90 px-3 py-1 rounded-lg text-rose-200 border border-rose-500/50">
+            <span className="text-xs font-mono bg-rose-100 px-3 py-1 rounded-lg text-rose-800 border border-rose-300 font-bold">
               HASH A ≠ HASH B
             </span>
           </div>
-          <p className="text-xs font-mono text-rose-300/90 pl-11">
+          <p className="text-xs font-mono text-rose-800 pl-10">
             Alert: The diff has been modified. The recalculated SHA-256 fingerprint differs from the on-chain recorded proof!
           </p>
         </div>
@@ -133,12 +133,12 @@ export default function TamperDemoPage() {
         
         {/* Left Column: Registered On-Chain Diff (Hash A) */}
         <div className="space-y-4">
-          <div className="glass-panel p-4 border border-cyan-500/30 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-cyan-400 font-mono font-bold text-xs">
+          <div className="saas-card p-4 border-l-4 border-l-indigo-600 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-indigo-700 font-mono font-bold text-xs">
               <FileCode2 className="w-4 h-4" />
               ORIGINAL CONTRIBUTION (HASH A)
             </div>
-            <span className="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded font-mono border border-cyan-800">
+            <span className="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-mono border border-indigo-200 font-semibold">
               Recorded on Algorand
             </span>
           </div>
@@ -151,9 +151,9 @@ export default function TamperDemoPage() {
             isEditable={false}
           />
 
-          <div className="glass-panel p-4 space-y-1">
-            <div className="text-[10px] font-mono text-slate-400 uppercase">On-Chain Fingerprint (Hash A)</div>
-            <div className="font-mono text-xs text-cyan-300 break-all font-bold bg-slate-950 p-2.5 rounded border border-cyan-500/30">
+          <div className="saas-card p-4 space-y-1">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">On-Chain Fingerprint (Hash A)</div>
+            <div className="font-mono text-xs text-indigo-400 font-bold bg-slate-900 p-3 rounded-xl break-all">
               {originalHash}
             </div>
           </div>
@@ -161,19 +161,19 @@ export default function TamperDemoPage() {
 
         {/* Right Column: Interactive Modifiable Diff (Hash B) */}
         <div className="space-y-4">
-          <div className={`glass-panel p-4 flex items-center justify-between border ${
-            isTampered ? 'border-amber-500/60 bg-amber-950/20' : 'border-slate-800'
+          <div className={`saas-card p-4 flex items-center justify-between border-l-4 ${
+            isTampered ? 'border-l-amber-500 bg-amber-50/50' : 'border-l-slate-400'
           }`}>
-            <div className="flex items-center gap-2 text-amber-400 font-mono font-bold text-xs">
-              <FileCode2 className="w-4 h-4" />
-              MODIFIED / EVALUATED DIFF (HASH B)
+            <div className="flex items-center gap-2 text-slate-800 font-mono font-bold text-xs">
+              <FileCode2 className="w-4 h-4 text-amber-600" />
+              EVALUATED DIFF (HASH B)
             </div>
             {isTampered ? (
-              <span className="text-[10px] bg-amber-900 text-amber-300 px-2 py-0.5 rounded font-mono font-bold border border-amber-500/40">
+              <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono font-bold border border-amber-300">
                 1-Char Modified
               </span>
             ) : (
-              <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">
+              <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono font-medium border border-slate-200">
                 Untampered
               </span>
             )}
@@ -187,10 +187,10 @@ export default function TamperDemoPage() {
             onChange={handleDiffTextChange}
           />
 
-          <div className="glass-panel p-4 space-y-1">
-            <div className="text-[10px] font-mono text-slate-400 uppercase">Recalculated Fingerprint (Hash B)</div>
-            <div className={`font-mono text-xs break-all font-bold bg-slate-950 p-2.5 rounded border ${
-              isMatch ? 'text-emerald-400 border-emerald-500/30' : 'text-rose-400 border-rose-500/50'
+          <div className="saas-card p-4 space-y-1">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">Recalculated Fingerprint (Hash B)</div>
+            <div className={`font-mono text-xs break-all font-bold bg-slate-900 p-3 rounded-xl ${
+              isMatch ? 'text-emerald-400' : 'text-rose-400'
             }`}>
               {modifiedHash}
             </div>
