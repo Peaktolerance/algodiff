@@ -106,9 +106,9 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           targetUpdateContext = matchedActivity;
           setPreviewUpdate(matchedActivity);
         } else {
-          // If pure hash/diffId entered without local update match
+          // If 64-char key entered without local update match
           targetDiffId = cleaned;
-          targetDiffHash = cleaned;
+          targetDiffHash = '';
         }
       } else {
         // Path B: From selected update preview
@@ -131,7 +131,7 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           setVerificationResult({
             status: 'DECODE_ERROR',
             computedDiffId: targetDiffId,
-            computedDiffHash: targetDiffHash,
+            computedDiffHash: targetDiffHash || targetDiffId,
             updateContext: targetUpdateContext,
             onChainRecord: null,
             title: 'BOX DECODE ERROR',
@@ -141,7 +141,7 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           setVerificationResult({
             status: 'NETWORK_ERROR',
             computedDiffId: targetDiffId,
-            computedDiffHash: targetDiffHash,
+            computedDiffHash: targetDiffHash || targetDiffId,
             updateContext: targetUpdateContext,
             onChainRecord: null,
             title: 'ALGORAND NETWORK ERROR',
@@ -151,7 +151,7 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           setVerificationResult({
             status: 'NOT_REGISTERED',
             computedDiffId: targetDiffId,
-            computedDiffHash: targetDiffHash,
+            computedDiffHash: targetDiffHash || targetDiffId,
             updateContext: targetUpdateContext,
             onChainRecord: null,
             title: 'NO ON-CHAIN PROOF FOUND',
@@ -159,13 +159,15 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           });
         }
       } else {
-        const isMatch = onChainRecord.diffHash.toLowerCase() === targetDiffHash.toLowerCase();
+        const expectedDiffHash = targetDiffHash || onChainRecord.diffHash;
+        const isMatch = onChainRecord.diffHash.toLowerCase() === expectedDiffHash.toLowerCase();
+
         if (isMatch) {
           setVerificationResult({
             status: 'VERIFIED',
-            computedDiffId: targetDiffId,
-            computedDiffHash: targetDiffHash,
-            updateContext: targetUpdateContext,
+            computedDiffId: onChainRecord.diffId || targetDiffId,
+            computedDiffHash: onChainRecord.diffHash,
+            updateContext: targetUpdateContext || onChainRecord,
             onChainRecord,
             title: '✓ VERIFIED ON ALGORAND',
             message: 'Fingerprint matches on-chain record.',
@@ -174,7 +176,7 @@ export default function VerifyPage({ initialDiffId, initialUpdate, repos = [], a
           setVerificationResult({
             status: 'MISMATCH',
             computedDiffId: targetDiffId,
-            computedDiffHash: targetDiffHash,
+            computedDiffHash: expectedDiffHash,
             updateContext: targetUpdateContext,
             onChainRecord,
             title: 'VERIFICATION FAILED',

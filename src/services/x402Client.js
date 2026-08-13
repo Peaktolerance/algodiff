@@ -1,5 +1,5 @@
 import algosdk from 'algosdk';
-import { algodClient, peraWallet, resolveCanonicalAddress, normalizeSignedTxnBytes } from './algorandClient.js';
+import { algodClient, peraWallet, resolveCanonicalAddress, normalizeSignedTxnBytes, safeSignTransaction } from './algorandClient.js';
 
 const X402_SERVER_ENDPOINT = import.meta.env?.VITE_X402_API_URL || '/api/x402/register-quote';
 
@@ -115,7 +115,7 @@ export async function executeX402Payment({ diffId, diffHash, walletAccount, wall
 
       // Sign x402 service fee payment via Pera Wallet
       const singleTxnGroup = [{ txn: payTxn, signers: [senderAddress] }];
-      const signedPayTxns = await peraWallet.signTransaction([singleTxnGroup]);
+      const signedPayTxns = await safeSignTransaction([singleTxnGroup]);
 
       console.log("[X402 DEBUG] Pera signed result:", signedPayTxns);
       console.log("[X402 DEBUG] Array.isArray:", Array.isArray(signedPayTxns));

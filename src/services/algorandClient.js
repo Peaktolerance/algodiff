@@ -22,6 +22,29 @@ export const indexerClient = new algosdk.Indexer(INDEXER_TOKEN, INDEXER_SERVER, 
 export const DIFF_REGISTRY_APP_ID = parseInt(import.meta.env?.VITE_ALGORAND_APP_ID || '769036041', 10);
 
 let activeWalletAddress = null;
+let isPeraSigningActive = false;
+
+/**
+ * Thread-safe wrapper for Pera Wallet transaction signing to prevent Error 4100 concurrent requests
+ */
+export async function safeSignTransaction(txnGroups) {
+  if (isPeraSigningActive) {
+    throw new Error("Transaction request pending: A signing request is already active in Pera Wallet. Please approve or decline the pending request in Pera Wallet before trying again.");
+  }
+
+  isPeraSigningActive = true;
+  try {
+    const result = await peraWallet.signTransaction(txnGroups);
+    return result;
+  } catch (err) {
+    if (err?.message?.includes('4100') || err?.message?.includes('pending') || err?.data?.type === 'CONNECT_MODAL_CLOSED') {
+      throw new Error("Transaction request pending: Pera Wallet has another signing request in progress. Please complete or dismiss it in Pera Wallet.");
+    }
+    throw err;
+  } finally {
+    isPeraSigningActive = false;
+  }
+}
 
 /**
  * Canonical Algorand Address Resolver
@@ -313,7 +336,7 @@ export async function registerDiffOnChain({ diffId, repoId, fromCommit, toCommit
 
   // Prompt Pera Wallet for user transaction signing
   const singleTxnGroup = [{ txn: tx, signers: [senderAddress] }];
-  const signedTxns = await peraWallet.signTransaction([singleTxnGroup]);
+  const signedTxns = await safeSignTransaction([singleTxnGroup]);
 
   console.log("[AlgoDiff DEBUG] Pera signed transaction result:", signedTxns);
   console.log("[AlgoDiff DEBUG] signedTxn Array.isArray:", Array.isArray(signedTxns));

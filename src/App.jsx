@@ -151,8 +151,12 @@ export default function App() {
     setActiveTab('verify');
   };
 
+  const [isRegistering, setIsRegistering] = useState(false);
+
   // Trigger Proof Registration for a Repo Watch update item
   const handleRegisterProofFromDetail = async (updateRecord) => {
+    if (isRegistering) return;
+    setIsRegistering(true);
     setActiveRegistrationUpdate(updateRecord);
     const senderAddress = resolveCanonicalAddress(wallet);
 
@@ -172,12 +176,15 @@ export default function App() {
       handleRefreshWalletBalance();
     } catch (e) {
       console.error("x402 payment flow exception:", e);
+    } finally {
+      setIsRegistering(false);
     }
   };
 
   // Execute Algorand Smart Contract call for Repo Watch update item
   const handleProceedToAlgorandRegistration = async () => {
-    if (!activeRegistrationUpdate) return;
+    if (!activeRegistrationUpdate || isRegistering) return;
+    setIsRegistering(true);
     setIsX402ModalOpen(false);
 
     const resolvedAddress = resolveCanonicalAddress(wallet);
@@ -205,6 +212,8 @@ export default function App() {
       await refreshWatchData();
     } catch (err) {
       console.error("Smart contract registration error:", err);
+    } finally {
+      setIsRegistering(false);
     }
   };
 

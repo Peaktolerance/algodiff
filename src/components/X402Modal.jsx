@@ -119,8 +119,11 @@ export default function X402Modal({ isOpen, onClose, paymentState, onProceedToRe
         <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
           {status === 'SUCCESS' ? (
             <button
-              onClick={onProceedToRegistration}
-              className="btn-algo px-5 py-2.5 rounded-xl text-xs font-semibold text-white flex items-center gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onProceedToRegistration) onProceedToRegistration();
+              }}
+              className="btn-algo px-5 py-2.5 rounded-xl text-xs font-semibold text-white flex items-center gap-2 shadow-sm disabled:opacity-50"
             >
               Proceed to Algorand Registration
               <ArrowRight className="w-4 h-4" />
