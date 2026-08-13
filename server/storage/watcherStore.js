@@ -51,6 +51,19 @@ const INITIAL_REPOS = [
     lastChecked: new Date(Date.now() - 1800000).toISOString(),
     lastCommitSha: null,
     status: 'ACTIVE',
+  },
+  {
+    id: 'Peaktolerance/algodiff',
+    owner: 'Peaktolerance',
+    name: 'algodiff',
+    fullName: 'Peaktolerance/algodiff',
+    description: 'Verifiable Git Repository Change Monitoring on Algorand',
+    htmlUrl: 'https://github.com/Peaktolerance/algodiff',
+    addedAt: new Date(Date.now() - 3600000).toISOString(),
+    lastChecked: new Date().toISOString(),
+    lastCommitSha: '6690d7c58630eadd3a1e94e96ffff0438cf3b7ec',
+    status: 'ACTIVE',
+    latestSummary: 'Fix Diff ID proof verification (5 files, +53 / -16)',
   }
 ];
 
@@ -68,7 +81,15 @@ class WatcherStore {
         const raw = fs.readFileSync(STORE_FILE, 'utf8');
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed.repos)) {
-          parsed.repos.forEach(r => this.repos.set(r.id.toLowerCase(), r));
+          parsed.repos.forEach(r => {
+            const initial = INITIAL_REPOS.find(init => init.id.toLowerCase() === r.id.toLowerCase());
+            if (initial && !r.lastCommitSha && initial.lastCommitSha) {
+              r.lastCommitSha = initial.lastCommitSha;
+              r.latestSummary = initial.latestSummary;
+              r.lastChecked = r.lastChecked || initial.lastChecked || new Date().toISOString();
+            }
+            this.repos.set(r.id.toLowerCase(), r);
+          });
         }
         if (Array.isArray(parsed.activity)) {
           this.activity = parsed.activity;
@@ -137,6 +158,10 @@ class WatcherStore {
 
   getActivityLog(limit = 50) {
     return this.activity.slice(0, limit);
+  }
+
+  getActivity(limit = 50) {
+    return this.getActivityLog(limit);
   }
 
   addActivityItem(item) {

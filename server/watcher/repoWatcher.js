@@ -131,7 +131,7 @@ export async function checkRepo(repoId) {
     };
 
     watcherStore.saveUpdateDetails(updateRecord.updateId, updateRecord);
-    const existingActivity1 = watcherStore.getActivity();
+    const existingActivity1 = watcherStore.getActivityLog(200);
     if (!existingActivity1.some(a => a.repoId === updateRecord.repoId && a.toCommit === updateRecord.toCommit)) {
       watcherStore.addActivityItem(updateRecord);
     }
@@ -197,7 +197,7 @@ export async function checkRepo(repoId) {
     };
 
     watcherStore.saveUpdateDetails(updateRecord.updateId, updateRecord);
-    const existingActivity2 = watcherStore.getActivity();
+    const existingActivity2 = watcherStore.getActivityLog(200);
     if (!existingActivity2.some(a => a.repoId === updateRecord.repoId && a.toCommit === updateRecord.toCommit)) {
       watcherStore.addActivityItem(updateRecord);
     }

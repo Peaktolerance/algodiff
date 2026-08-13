@@ -32,10 +32,17 @@ export function parseGitHubInput(input) {
   return null;
 }
 
-const GITHUB_HEADERS = {
-  'User-Agent': 'AlgoDiff-RepoWatcher/1.0',
-  'Accept': 'application/vnd.github.v3+json',
-};
+function getGitHubHeaders() {
+  const headers = {
+    'User-Agent': 'AlgoDiff-RepoWatcher/1.0',
+    'Accept': 'application/vnd.github.v3+json',
+  };
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  if (token) {
+    headers['Authorization'] = `token ${token}`;
+  }
+  return headers;
+}
 
 /**
  * Helper to handle GitHub response errors with accurate header/status inspection
@@ -65,7 +72,7 @@ export async function fetchGitHubRepoDetails(owner, repo) {
   const url = `https://api.github.com/repos/${owner}/${repo}`;
 
   try {
-    const response = await fetchFn(url, { headers: GITHUB_HEADERS });
+    const response = await fetchFn(url, { headers: getGitHubHeaders() });
     if (!response.ok) {
       handleGitHubResponseError(response, repoSlug);
     }
@@ -96,7 +103,7 @@ export async function fetchGitHubCommits(owner, repo, limit = 15) {
   const url = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=${limit}`;
 
   try {
-    const response = await fetchFn(url, { headers: GITHUB_HEADERS });
+    const response = await fetchFn(url, { headers: getGitHubHeaders() });
     if (!response.ok) {
       handleGitHubResponseError(response, repoSlug);
     }
@@ -128,7 +135,7 @@ export async function fetchGitHubDiff(owner, repo, baseSha, headSha) {
   const url = `https://api.github.com/repos/${owner}/${repo}/compare/${baseSha}...${headSha}`;
 
   try {
-    const response = await fetchFn(url, { headers: GITHUB_HEADERS });
+    const response = await fetchFn(url, { headers: getGitHubHeaders() });
     if (!response.ok) {
       handleGitHubResponseError(response, repoSlug);
     }
